@@ -8,11 +8,18 @@ extension StringExtensions on String {
     }).join(' ');
   }
 
-  String capitalize() {
-    if (isEmpty) {
-      return '';
-    }
-    return this[0].toUpperCase() + substring(1).toLowerCase();
+   String capitalize() {
+    if (isEmpty) return '';
+
+    final regExp = RegExp(r'[A-Za-zÁÉÍÓÚáéíóúÑñ]');
+    final match = regExp.firstMatch(this);
+
+    if (match == null) return this;
+
+    final index = match.start;
+    return substring(0, index) +
+        this[index].toUpperCase() +
+        substring(index + 1).toLowerCase();
   }
 
   String capitalizeSentences() {
